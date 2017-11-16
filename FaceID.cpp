@@ -2,7 +2,7 @@
 #include <opencv2/objdetect.hpp>
 #include <opencv2/highgui.hpp>
 #include <opencv2/imgproc.hpp>
-//#include <opencv2/opencv.hpp>
+#include <opencv2/opencv.hpp>
 #include <iostream>
 #include <stdio.h>
  
@@ -31,10 +31,6 @@ int main(int argc, char *argv[]){
  		PANIC("Error loading face cascade");
     if (!eyes_cascade.load(eyes_cascade_name))
     	PANIC("Error loading eyes cascade");
-
-    // CascadeClassifier cascade, nestedCascade; 
-    // nestedCascade.load( "Sorce/haarcascade_eye_tree_eyeglasses.xml" ) ;
-    // cascade.load( "Source/haarcascade_frontalcatface.xml" ) ; 
  
     // Open the local webcamera
     capture.open(0);
@@ -45,6 +41,10 @@ int main(int argc, char *argv[]){
 
         while(1){
             capture >> frame; // Get photos from camera
+
+            if(frame.empty())
+            	PANIC("Error capture frame");
+
             detectAndDraw(frame); 
 
             // Press q to exit from window
@@ -54,65 +54,53 @@ int main(int argc, char *argv[]){
         }
     }
     else
-        cout<<"Could not Open Camera";
+        PANIC("Error open camera");
 
     return 0;
 }
  
 void detectAndDraw(Mat frame){
-    vector<Rect> faces, faces2;
-    Mat frame_gray, smallImg;
+    std::vector<Rect> faces;
+    std::vector<Rect> eyes;
+    Mat frame_gray, frame_resize;
+
+    int radius;
  
  	// Convert to Gray Scale
     cvtColor(frame, frame_gray, COLOR_BGR2GRAY);
  
     // Resize the Grayscale Image 
-    resize( frame_gray, smallImg, Size(), 1, 1, INTER_LINEAR ); 
+    resize(frame_gray, frame_resize, Size(), 1, 1, INTER_LINEAR);
 
     // Histogram equalization
-    equalizeHist( smallImg, smallImg );
+    equalizeHist(frame_resize, frame_resize);
  
     // Detect faces of different sizes using cascade classifier 
-    face_cascade.detectMultiScale( smallImg, faces, 1.1, 2, 0|CASCADE_SCALE_IMAGE, Size(30, 30) );
+    face_cascade.detectMultiScale(frame_resize, faces, 1.1, 3, 0|CASCADE_SCALE_IMAGE, Size(70, 70) , Size(100, 100));
  
     // Draw circles around the faces
-    for ( size_t i = 0; i < faces.size(); i++ )
+    for (size_t i = 0; i < faces.size(); i++)
     {
         Rect r = faces[i];
-        Mat smallImgROI;
-        vector<Rect> nestedObjects;
+        //Mat smallImgROI;
         Point center;
-        Scalar color = Scalar(255, 0, 0); // Color for Drawing tool
-        int radius;
  
-        double aspect_ratio = (double)r.width/r.height;
-        if( 0.75 < aspect_ratio && aspect_ratio < 1.3 )
-        {
-            center.x = cvRound((r.x + r.width*0.5));
-            center.y = cvRound((r.y + r.height*0.5));
-            radius = cvRound((r.width + r.height)*0.25);
-            circle(frame, center, radius, color, 3, 8, 0);
-        }
-        else
-            rectangle(frame, cvPoint(cvRound(r.x), cvRound(r.y)),
-                    cvPoint(cvRound((r.x + r.width-1)), 
-                    cvRound((r.y + r.height-1))), color, 3, 8, 0);
-        if(eyes_cascade.empty())
-            continue;
-        smallImgROI = smallImg( r );
-         
+        rectangle(frame, faces[i], Scalar(255, 0, 0), 2, 8, 0);
+
+        Mat faceROI = frame_resize(faces[i]);
+
         // Detection of eyes int the input image
-        eyes_cascade.detectMultiScale( smallImgROI, nestedObjects, 1.1, 2,
-                                        0|CASCADE_SCALE_IMAGE, Size(30, 30) ); 
+        eyes_cascade.detectMultiScale(faceROI, eyes, 1.1, 1,
+                                        0|CASCADE_SCALE_IMAGE, Size(3, 3)); 
          
         // Draw circles around eyes
-        for ( size_t j = 0; j < nestedObjects.size(); j++ ) 
+        for (size_t j = 0; j < eyes.size(); j++) 
         {
-            Rect nr = nestedObjects[j];
+            Rect nr = eyes[j];
             center.x = cvRound((r.x + nr.x + nr.width*0.5));
             center.y = cvRound((r.y + nr.y + nr.height*0.5));
             radius = cvRound((nr.width + nr.height)*0.25);
-            circle(frame, center, radius, color, 3, 8, 0);
+            circle(frame, center, radius, Scalar(0, 255, 0), 2, 8, 0);
         }
     }
  
