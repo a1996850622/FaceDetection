@@ -1,7 +1,7 @@
 /** g++ FaceID.cpp -o output `pkg-config --cflags --libs opencv` **/
-#include <opencv2/objdetect.hpp>
-#include <opencv2/highgui.hpp>
-#include <opencv2/imgproc.hpp>
+//#include <opencv2/objdetect.hpp>
+//#include <opencv2/highgui.hpp>
+//#include <opencv2/imgproc.hpp>
 #include <opencv2/opencv.hpp>
 #include <iostream>
 #include <stdio.h>
@@ -16,7 +16,7 @@ void PANIC(char *msg);
 void detectAndDraw(Mat frame);
 
 /** Gloabal variables **/
-String face_cascade_name = "Source/haarcascade_frontalcatface.xml";
+String face_cascade_name = "Source/haarcascade_frontalface_default.xml";
 String eyes_cascade_name = "Source/haarcascade_eye_tree_eyeglasses.xml";
 CascadeClassifier face_cascade; // Define the face classifier
 CascadeClassifier eyes_cascade; // Define the eyes classifier
@@ -24,16 +24,13 @@ String window_name = "Face detection";
  
 int main(int argc, char *argv[]){
     // VideoCapture class for playing video for which faces to be detected
-    VideoCapture capture; 
+    VideoCapture capture = VideoCapture(0); 
     Mat frame, image;
  
  	if (!face_cascade.load(face_cascade_name)) 
  		PANIC("Error loading face cascade");
     if (!eyes_cascade.load(eyes_cascade_name))
     	PANIC("Error loading eyes cascade");
- 
-    // Open the local webcamera
-    capture.open(0);
 
     // After the webcamera is opened
     if(capture.isOpened()){
@@ -76,7 +73,7 @@ void detectAndDraw(Mat frame){
     equalizeHist(frame_resize, frame_resize);
  
     // Detect faces of different sizes using cascade classifier 
-    face_cascade.detectMultiScale(frame_resize, faces, 1.1, 3, 0|CASCADE_SCALE_IMAGE, Size(70, 70) , Size(100, 100));
+    face_cascade.detectMultiScale(frame_resize, faces, 1.1, 5, 0|CASCADE_SCALE_IMAGE, Size(30, 30));
  
     // Draw circles around the faces
     for (size_t i = 0; i < faces.size(); i++)
