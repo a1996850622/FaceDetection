@@ -1,7 +1,4 @@
 /** g++ FaceID.cpp -o output `pkg-config --cflags --libs opencv` **/
-//#include <opencv2/objdetect.hpp>
-//#include <opencv2/highgui.hpp>
-//#include <opencv2/imgproc.hpp>
 #include <opencv2/opencv.hpp>
 #include <iostream>
 #include <stdio.h>
@@ -57,10 +54,8 @@ int main(int argc, char *argv[]){
 }
  
 void detectAndDraw(Mat frame){
-    std::vector<Rect> faces;
-    std::vector<Rect> eyes;
+    std::vector<Rect> faces, eyes;
     Mat frame_gray, frame_resize;
-
     int radius;
  
  	// Convert to Gray Scale
@@ -73,31 +68,27 @@ void detectAndDraw(Mat frame){
     equalizeHist(frame_resize, frame_resize);
  
     // Detect faces of different sizes using cascade classifier 
-    face_cascade.detectMultiScale(frame_resize, faces, 1.1, 5, 0|CASCADE_SCALE_IMAGE, Size(30, 30));
+    face_cascade.detectMultiScale(frame_resize, faces, 1.1, 5, CV_HAAR_SCALE_IMAGE, Size(30, 30));
  
     // Draw circles around the faces
     for (size_t i = 0; i < faces.size(); i++)
     {
-        Rect r = faces[i];
-        //Mat smallImgROI;
         Point center;
  
-        rectangle(frame, faces[i], Scalar(255, 0, 0), 2, 8, 0);
+        rectangle(frame, faces[i], Scalar(255, 0, 0), 3, 8, 0);
 
         Mat faceROI = frame_resize(faces[i]);
 
         // Detection of eyes int the input image
-        eyes_cascade.detectMultiScale(faceROI, eyes, 1.1, 1,
-                                        0|CASCADE_SCALE_IMAGE, Size(3, 3)); 
+        eyes_cascade.detectMultiScale(faceROI, eyes, 1.1, 1, CV_HAAR_SCALE_IMAGE, Size(3, 3)); 
          
         // Draw circles around eyes
         for (size_t j = 0; j < eyes.size(); j++) 
         {
-            Rect nr = eyes[j];
-            center.x = cvRound((r.x + nr.x + nr.width*0.5));
-            center.y = cvRound((r.y + nr.y + nr.height*0.5));
-            radius = cvRound((nr.width + nr.height)*0.25);
-            circle(frame, center, radius, Scalar(0, 255, 0), 2, 8, 0);
+            center.x = cvRound((faces[i].x + eyes[j].x + eyes[j].width*0.5));
+            center.y = cvRound((faces[i].y + eyes[j].y + eyes[j].height*0.5));
+            radius = cvRound((eyes[j].width + eyes[j].height)*0.25);
+            circle(frame, center, radius, Scalar(0, 255, 0), 3, 8, 0);
         }
     }
  
