@@ -14,5 +14,5 @@ Face Detection System
 
 ## Reference
 
-* [OpenCV人臉識別完整版](http://www.jianshu.com/p/232b12db4ea6)
+* [OpenCV 人臉識別完整版](http://www.jianshu.com/p/232b12db4ea6)
 * [OpenCV C++ Program for Face Detection](http://www.geeksforgeeks.org/opencv-c-program-face-detection/)
