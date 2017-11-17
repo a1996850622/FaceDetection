@@ -6,6 +6,7 @@
 using namespace std;
 using namespace cv;
 
+/** Print error message **/
 void PANIC(char *msg);
 #define PANIC(msg){perror(msg); exit(-1);}
 
@@ -23,13 +24,13 @@ int main(int argc, char *argv[]){
     // VideoCapture class for playing video for which faces to be detected
     VideoCapture capture = VideoCapture(0); 
     Mat frame, image;
- 
- 	if (!face_cascade.load(face_cascade_name)) 
- 		PANIC("Error loading face cascade");
-    if (!eyes_cascade.load(eyes_cascade_name))
-    	PANIC("Error loading eyes cascade");
 
-    // After the webcamera is opened
+	if (!face_cascade.load(face_cascade_name)) 
+		PANIC("Error loading face cascade");
+	if (!eyes_cascade.load(eyes_cascade_name))
+		PANIC("Error loading eyes cascade");
+
+    // After the camera is opened
     if(capture.isOpened()){
         cout << "Face Detection Started...." << endl;
 
@@ -58,7 +59,7 @@ void detectAndDraw(Mat frame){
     Mat frame_gray, frame_resize;
     int radius;
  
- 	// Convert to Gray Scale
+	// Convert to Gray Scale
     cvtColor(frame, frame_gray, COLOR_BGR2GRAY);
  
     // Resize the Grayscale Image 
