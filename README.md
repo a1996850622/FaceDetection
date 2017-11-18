@@ -1,6 +1,6 @@
-# FaceDetection
+# FaceRecognition
 
-Face Detection System
+Face Recognition System
 
 
 ## Operating Environment
