@@ -22,7 +22,6 @@ int main(void){
 		if(frame.empty())
             PANIC("Error capture frame");
 
-        imshow("frame", frame);
 		String filename = format("picture%d.jpg", i);
 
 		/** Press p to take pictures **/
@@ -37,5 +36,6 @@ int main(void){
 			default:
 				break;
 		}
+		imshow("frame", frame);
 	}
 }
