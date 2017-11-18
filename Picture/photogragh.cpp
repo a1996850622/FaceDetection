@@ -5,6 +5,10 @@
 using namespace std;
 using namespace cv;
 
+/** Print error message **/
+void PANIC(char *msg);
+#define PANIC(msg){perror(msg); exit(-1);}
+
 /** Gloabal variables **/
 String face_cascade_name = "../Source/haarcascade_frontalface_default.xml";
 String eyes_cascade_name = "../Source/haarcascade_eye_tree_eyeglasses.xml";
@@ -27,12 +31,8 @@ int main(void){
 		char key = waitKey(100);
 		capture >> frame;
 
-		// Convert to Gray Scale
-		cvtColor(frame, frame_gray, COLOR_BGR2GRAY);
-		equalizeHist(frame_gray, frame_gray);
-
-		// Detect faces of different sizes using cascade classifier 
-    	face_cascade.detectMultiScale(frame_resize, faces, 1.1, 5, CV_HAAR_SCALE_IMAGE, Size(30, 30));
+		if(frame.empty())
+            PANIC("Error capture frame");
 
 		imshow("photo", frame);
 		String filename = format("picture%d.jpg", i);
