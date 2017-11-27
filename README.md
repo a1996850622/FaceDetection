@@ -2,6 +2,8 @@
 
 Face Recognition System
 
+Get more detailed informations： [My Article](https://a1996850622.github.io/FaceID/FaceID.html)
+
 
 ## Operating Environment
 
