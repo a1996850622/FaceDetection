@@ -4,6 +4,7 @@ Face Recognition System
 
 Get more detailed informations： [My Article](https://a1996850622.github.io/FaceID/FaceID.html)
 
+<br/>
 
 ## Operating Environment
 
@@ -13,6 +14,7 @@ Get more detailed informations： [My Article](https://a1996850622.github.io/Fac
 
 * **Language :** C++
 
+<br/>
 
 ## Post
 
@@ -20,6 +22,7 @@ Get more detailed informations： [My Article](https://a1996850622.github.io/Fac
 
 - [(1) 臉部偵測](https://a1996850622.github.io/Post/OpenCV/FaceID/FaceID.html)
 
+<br/>
 
 ## Reference
 
