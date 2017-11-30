@@ -14,6 +14,13 @@ Get more detailed informations： [My Article](https://a1996850622.github.io/Fac
 * **Language :** C++
 
 
+## Post
+
+#### [OpenCV + Cpp] FaceID 人臉辨識系統實作
+
+- [(1) 臉部偵測](https://a1996850622.github.io/Post/OpenCV/FaceID/FaceID.html)
+
+
 ## Reference
 
 * [OpenCV 人臉識別完整版](http://www.jianshu.com/p/232b12db4ea6)
