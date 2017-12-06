@@ -2,7 +2,7 @@
 
 Face Recognition System
 
-Get more detailed informations： [My Article](https://wenyuanchen.000webhostapp.com/category/opencv-faceid-%E4%BA%BA%E8%87%89%E8%AD%98%E5%88%A5)
+Get more detailed informations： [My Article](https://a1996850622.github.io/FaceID/)
 
 <br/>
 
