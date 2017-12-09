@@ -2,7 +2,7 @@
 
 Face Recognition System
 
-Get more detailed informations： [My Article](https://a1996850622.github.io/FaceID/)
+Get more detailed informations： [My Article](https://a1996850622.github.io/faceid%E4%BA%BA%E8%87%89%E8%AD%98%E5%88%A5/2017/11/20/FaceDetection.html)
 
 <br/>
 
