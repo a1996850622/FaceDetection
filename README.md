@@ -20,7 +20,7 @@ Get more detailed informations： [My Article](https://a1996850622.github.io/fac
 
 #### [OpenCV + Cpp] FaceID 人臉辨識系統實作
 
-- [(1) 臉部偵測](https://a1996850622.github.io/Post/OpenCV/FaceID/FaceID.html)
+- [(1) 臉部偵測](https://a1996850622.github.io/faceid%E4%BA%BA%E8%87%89%E8%AD%98%E5%88%A5/2017/11/20/FaceDetection.html)
 
 <br/>
 
